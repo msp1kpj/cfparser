@@ -409,19 +409,7 @@ RETHROW                  <rethrow>
           (functionAttribute
             (identifier hint)
             =
-            (startExpression
-              (compareExpression
-                (baseExpression
-                  (unaryExpression
-                    (primaryExpression
-                      (literalExpression
-                        (stringLiteral " (stringLiteralPart compile dynamic source) ")
-                      )
-                    )
-                  )
-                )
-              )
-            )
+            (stringLiteral " (stringLiteralPart compile dynamic source) ")
           )
           (compoundStatement
             {
@@ -1526,17 +1514,19 @@ RETHROW                  <rethrow>
                             )
                             (compareExpressionOperator AND)
                             (compareExpression
-                              (notExpression
-                                NOT
-                                (startExpression
-                                  (compareExpression
-                                    (baseExpression
-                                      (unaryExpression
-                                        (memberExpression
-                                          (functionCall
-                                            (identifierOrReservedWord (identifier isTrustedSource))
-                                            (
-                                            argumentList
+                              (baseExpression
+                                (notExpression
+                                  NOT
+                                  (startExpression
+                                    (compareExpression
+                                      (baseExpression
+                                        (unaryExpression
+                                          (memberExpression
+                                            (functionCall
+                                              (identifierOrReservedWord (identifier isTrustedSource))
+                                              (
+                                              argumentList
+                                              )
                                             )
                                           )
                                         )

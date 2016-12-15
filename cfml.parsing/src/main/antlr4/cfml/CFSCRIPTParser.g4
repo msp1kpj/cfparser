@@ -82,12 +82,14 @@ componentAttribute
 //i=identifier EQUALSOP^ v=baseExpression
    
 functionAttribute
-  : (prefix=IDENTIFIER COLON)? id=identifier op=EQUALSOP startExpression
-  | (prefix=IDENTIFIER COLON)? id=identifier
+  : identifierWithColon op=EQUALSOP (value=identifier | valueString=stringLiteral)
+  | id=identifier ( op=(EQUALSOP|COLON) (value=identifier | valueString=stringLiteral) )?
   ;
-  
 
-  
+identifierWithColon
+: identifier COLON identifier
+;
+
 parameterAttribute
   : identifier EQUALSOP startExpression //-> ^(PARAMETER_ATTRIBUTE identifier baseExpression)
   | identifier
@@ -149,6 +151,7 @@ condition
 returnStatement
   : RETURN SEMICOLON
   | RETURN startExpression SEMICOLON
+  | RETURN assignmentExpression SEMICOLON
   ;
   
 ifStatement
@@ -238,7 +241,7 @@ rethrowStatment:
 // component  
 
 includeStatement
-  : lc=INCLUDE baseExpression SEMICOLON  //-> ^(INCLUDE  baseExpression* ) 
+  : lc=INCLUDE baseExpression (paramStatementAttributes)? SEMICOLON  //-> ^(INCLUDE  baseExpression* ) 
   ;
 
 importStatement
@@ -366,9 +369,12 @@ exitStatement
   ;
 
 paramStatement
-  : lc=PARAM paramStatementAttributes SEMICOLON //-> ^(PARAMSTATEMENT[$lc] paramStatementAttributes)
+  : lc=PARAM (paramStatementAttributes | paramExpression) SEMICOLON //-> ^(PARAMSTATEMENT[$lc] paramStatementAttributes)
   ;
   
+paramExpression
+  : type? multipartIdentifier EQUALSOP startExpression
+  ;
 propertyStatement
   : lc=PROPERTY paramStatementAttributes SEMICOLON //-> ^(PROPERTYSTATEMENT[$lc] paramStatementAttributes)
   | lc=PROPERTY typeSpec? name=identifier SEMICOLON
@@ -412,7 +418,9 @@ ternaryExpression
 
 baseExpression
 	:
-	 concatenationExpression
+	notExpression
+	| notNotExpression
+	| concatenationExpression
 	| additiveExpression
 	| modExpression
 	| intDivisionExpression
@@ -429,9 +437,7 @@ elvisExpression:
 	
 compareExpression
 	: (
-	notExpression
-	| notNotExpression
-	| left=baseExpression 
+	left=baseExpression 
 		(operator=compareExpressionOperator right=compareExpression)?
 	)
 	;
@@ -634,12 +640,16 @@ argumentList
   ;
 
 argument
-  : ( name=identifier COLON startExpression //-> ^( COLON identifier baseExpression ) 
+  : ( (name=argumentName) COLON startExpression //-> ^( COLON identifier baseExpression ) 
   )
-  | ( name=identifier EQUALSOP startExpression //-> ^( COLON identifier baseExpression ) 
+  | ( (name=argumentName) EQUALSOP startExpression //-> ^( COLON identifier baseExpression ) 
   )
   | startExpression 
   | anonymousFunctionDeclaration
+  ;
+  
+argumentName
+  : identifier | stringLiteral
   ;
 
 multipartIdentifier

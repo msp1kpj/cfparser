@@ -1,22 +1,39 @@
 package cfml.parsing.cfscript.script;
 
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Token;
+
 import cfml.parsing.cfscript.CFIdentifier;
 
 public class CFCatchStatement extends CFCatchClause implements CFScriptStatement {
 	
 	private CFIdentifier var;
 	private CFScriptStatement body;
+	CommonTokenStream tokens;
+	final Token token;
 	
 	public CFCatchStatement(String _type, CFIdentifier _var, CFScriptStatement _body) {
 		type = _type;
 		var = _var;
 		body = _body;
+		if (_var != null)
+			token = var.getToken();
+		else if (body != null)
+			token = _body.getToken();
+		else
+			token = null;
 	}
 	
 	public CFCatchStatement(CFIdentifier _type, CFIdentifier _var, CFScriptStatement _body) {
 		type = _type.Decompile(0);
 		var = _var;
 		body = _body;
+		if (var != null)
+			token = var.getToken();
+		else if (body != null)
+			token = body.getToken();
+		else
+			token = null;
 	}
 	
 	public CFIdentifier getVariable() {
@@ -44,4 +61,17 @@ public class CFCatchStatement extends CFCatchClause implements CFScriptStatement
 		return sb.toString();
 	}
 	
+	public CommonTokenStream getTokens() {
+		return tokens;
+	}
+	
+	public void setTokens(CommonTokenStream tokens) {
+		this.tokens = tokens;
+	}
+	
+	@Override
+	public Token getToken() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

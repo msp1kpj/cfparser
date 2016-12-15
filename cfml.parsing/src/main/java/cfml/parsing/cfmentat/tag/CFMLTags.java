@@ -8,6 +8,7 @@ import cfml.dictionary.Tag;
 import cfml.dictionary.preferences.DictionaryPreferences;
 import cfml.parsing.preferences.ParserPreferences;
 import net.htmlparser.jericho.EndTagType;
+import net.htmlparser.jericho.HTMLElements;
 import net.htmlparser.jericho.StartTagType;
 import net.htmlparser.jericho.TagType;
 
@@ -41,21 +42,26 @@ public class CFMLTags {
 	public static void register() {
 		if (registered)
 			return;
+			
 		DictionaryManager.initDictionaries();
 		cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
 		Set<Tag> cfTags = cfdic.getAllTags();
 		CFMLStartTag cftag;
 		for (Tag tag : cfTags) {
-			// if (!tag.getName().equals("cfif") && tag.getName().equals("cfcomment")) {
-			if (tag.isSingle()) {
-				cftag = new CFMLStartTag(tag.getHelp(), "<" + tag.getName(), ">", null, false, tag.hasParameters(),
-						tag.isXMLStyle());
-			} else {
-				cftag = new CFMLStartTag(tag.getHelp(), "<" + tag.getName(), ">", EndTagType.NORMAL, false, tag.hasParameters(),
-						tag.isXMLStyle());
+			if (tag.isSingle() || !tag.isEndtagrequired()) {
+				HTMLElements.getEndTagForbiddenElementNames().add(tag.getName());
 			}
-			cftag.register();
-			// }
+			
+			if (!tag.getName().equals("cfif") && tag.getName().equals("cfcomment")) {
+				if (tag.isSingle()) {
+					cftag = new CFMLStartTag(tag.getHelp(), "<" + tag.getName(), ">", null, false, tag.hasParameters(),
+							tag.isXMLStyle());
+				} else {
+					cftag = new CFMLStartTag(tag.getHelp(), "<" + tag.getName(), ">", EndTagType.NORMAL, false,
+							tag.hasParameters(), tag.isXMLStyle());
+				}
+				cftag.register();
+			}
 		}
 		// we register these last so they override anything in the syntax dictionary
 		for (TagType tagType : TAG_TYPES)

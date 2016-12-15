@@ -7,6 +7,9 @@ package cfml.parsing.cfscript.script;
 
 import java.util.List;
 
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Token;
+
 import cfml.parsing.cfscript.CFExpression;
 
 public class CFCase implements CFScriptStatement, java.io.Serializable {
@@ -16,6 +19,7 @@ public class CFCase implements CFScriptStatement, java.io.Serializable {
 	private List<CFScriptStatement> statements;
 	private boolean isDefault = true;
 	private CFExpression constant;
+	CommonTokenStream tokens;
 	
 	public CFCase(CFExpression _constant, List<CFScriptStatement> _statement) {
 		this(_statement);
@@ -55,7 +59,7 @@ public class CFCase implements CFScriptStatement, java.io.Serializable {
 		StringBuilder sb = new StringBuilder();
 		if (isDefault) {
 			sb.append("default:");
-		} else {
+		} else if (constant != null) {
 			sb.append("case ");
 			sb.append(constant.Decompile(0));
 			sb.append(":");
@@ -66,4 +70,21 @@ public class CFCase implements CFScriptStatement, java.io.Serializable {
 		return sb.toString();
 	}
 	
+	public CommonTokenStream getTokens() {
+		return tokens;
+	}
+	
+	public void setTokens(CommonTokenStream tokens) {
+		this.tokens = tokens;
+	}
+	
+	@Override
+	public Token getToken() {
+		if (constant != null)
+			return constant.getToken();
+		if (statements.size() > 0) {
+			return statements.get(0).getToken();
+		}
+		return null;
+	}
 }
