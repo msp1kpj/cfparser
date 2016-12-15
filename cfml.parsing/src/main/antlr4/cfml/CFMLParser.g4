@@ -31,11 +31,17 @@ htmlElement
 cfmlElement
     : cfmlComment
     | cfset
+    | cfqueryparam
     ;
         
 cfset
 	: TAG_OPEN CFSET cfexpression (TAG_SLASH_CLOSE | TAG_CLOSE)
-	;  
+	; 
+
+cfqueryparam
+	: TAG_OPEN CFQUERYPARAM cfexpression (TAG_SLASH_CLOSE | TAG_CLOSE)
+	; 	
+ 
 	 
 cfexpression
 	: EXPRESSION

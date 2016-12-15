@@ -51,7 +51,7 @@ import cfml.dictionary.syntax.SQLSyntaxDictionary;
 
 /**
  * @author Rob
- * 
+ * 		
  *         This class loads all the dictionaries and can be used to get specific dictionaries. This (hopefully) well
  *         help in abstracting the dictionaries not intended to be instantiated
  */
@@ -80,20 +80,19 @@ public class DictionaryManager {
 	private static Document dictionaryConfig = null;
 	private static DictionaryPreferences fPrefs;
 	private static String fBuiltInDictionaryPath;
-
+	
 	private static boolean initialized;
-
+	
 	private DictionaryManager(DictionaryPreferences prefs) {
 		fPrefs = prefs;
 		init();
 	}
-
+	
 	static private void init() {
 		try {
-			fBuiltInDictionaryPath = "jar:"
-					+ DictionaryManager.class.getClassLoader()
-							.getResource("org.cfeclipse.cfml/dictionary/dictionaryconfig.xml").getFile()
-							.replace("dictionaryconfig.xml", "");
+			fBuiltInDictionaryPath = "jar:" + DictionaryManager.class.getClassLoader()
+					.getResource("org.cfeclipse.cfml/dictionary/dictionaryconfig.xml").getFile()
+					.replace("dictionaryconfig.xml", "");
 		} catch (Exception e) {
 			fBuiltInDictionaryPath = "jar:file:" + DictionaryManager.class.getResource("/dictionaries.zip").getFile()
 					+ "!/org.cfeclipse.cfml/dictionary/";
@@ -101,7 +100,7 @@ public class DictionaryManager {
 		DICTIONARY_DIR = fPrefs.getDictionaryDir();
 		CF_DICTIONARY = fPrefs.getCFDictionary();
 	}
-
+	
 	/**
 	 * Loads the dictionary config file. The config file lists all the dictionary files that are available to the system
 	 */
@@ -135,7 +134,7 @@ public class DictionaryManager {
 			e.printStackTrace(System.err);
 		}
 	}
-
+	
 	/**
 	 * Tell the dictionaries to load based on the config file
 	 */
@@ -151,7 +150,7 @@ public class DictionaryManager {
 		String cfdictversion = getInitialDictVersion();
 		if (dictionaryConfig == null)
 			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml");
-		
+			
 		// load the default dictionaries into the cache
 		// this is kind of weak but it'll do pig... it'll do...
 		if (cfdictversion.trim().length() == 0) {
@@ -173,7 +172,7 @@ public class DictionaryManager {
 		
 		// System.out.println("Dictionaries initialized in " +
 		// (System.currentTimeMillis() - time) + " ms");
-
+		
 		initialized = true;
 	}
 	
@@ -249,8 +248,8 @@ public class DictionaryManager {
 		SyntaxDictionary dic = getDictionaryByVersion(versionkey);
 		
 		if (dic == null) {
-			throw new IllegalArgumentException("Problem loading version node " + versionkey
-					+ " from dictionaryconfig.xml");
+			throw new IllegalArgumentException(
+					"Problem loading version node " + versionkey + " from dictionaryconfig.xml");
 		}
 		// add finally add them to the cache
 		addDictionaryToCache(versionkey, dic);
@@ -276,9 +275,9 @@ public class DictionaryManager {
 				URL configurl = new URL(dictionaryConfigURL, "dictionaryconfig.xml");
 				org.jdom.Document document = builder.build(configurl);
 				
-				XPath x = XPath.newInstance("//dictionary[@id='CF_DICTIONARY']/version[@key=\'" + versionkey
-						+ "\']/grammar[1]");
-				
+				XPath x = XPath.newInstance(
+						"//dictionary[@id='CF_DICTIONARY']/version[@key=\'" + versionkey + "\']/grammar[1]");
+						
 				Element grammerElement = (Element) x.selectSingleNode(document);
 				dic = new SQLSyntaxDictionary();
 				dic.loadDictionary(getDictionaryLocation(grammerElement.getAttributeValue("location")));
@@ -301,7 +300,7 @@ public class DictionaryManager {
 	public static SyntaxDictionary getDictionaryByVersion(String versionkey) {
 		if (dictionaryConfig == null)
 			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml");
-		
+			
 		// grab the cfml dictionary
 		// Node n = dictionaryConfig.getElementById(CFDIC).getFirstChild();
 		Node versionNode = dictionaryConfig.getElementById(versionkey);
@@ -325,8 +324,8 @@ public class DictionaryManager {
 			try {
 				((SQLSyntaxDictionary) dic).loadKeywords(new URL(getDictionaryLocation(sqlwords)));
 			} catch (MalformedURLException e) {
-				throw new IllegalArgumentException("Problem loading version node " + sqlwords
-						+ " from dictionaryconfig.xml");
+				throw new IllegalArgumentException(
+						"Problem loading version node " + sqlwords + " from dictionaryconfig.xml");
 			}
 		} else if (dicttype.equals(JSDIC_KEY)) {
 			dic = new JSSyntaxDictionary();
@@ -411,12 +410,10 @@ public class DictionaryManager {
 			if (retry) {
 				// We've already tried to load the dictionary, so something must
 				// be broken.
-				System.out
-						.println("Error! Dictionary "
-								+ cachekey
-								+ " could not be loaded.\n This may cause CFEclipse to work unpredictably or, in some cases, not at all.\n\nTry closing Eclipse and starting it from the command line with -clean as a command line argument.");
-				throw new IllegalArgumentException("Problem loading version node " + cachekey
-						+ " from dictionaryconfig.xml");
+				System.out.println("Error! Dictionary " + cachekey
+						+ " could not be loaded.\n This may cause CFEclipse to work unpredictably or, in some cases, not at all.\n\nTry closing Eclipse and starting it from the command line with -clean as a command line argument.");
+				throw new IllegalArgumentException(
+						"Problem loading version node " + cachekey + " from dictionaryconfig.xml");
 			}
 			// the dictionary is not in the cache, lets try to load it...
 			loadDictionaryByVersion(cachekey);
@@ -425,8 +422,8 @@ public class DictionaryManager {
 		} else if (cachekey != null || cachekey.length() > 0) {
 			return;
 		} else {
-			throw new IllegalArgumentException("Cache key: " + cachekey + " is not in the cache"
-					+ dictionariesCache.keySet().toString());
+			throw new IllegalArgumentException(
+					"Cache key: " + cachekey + " is not in the cache" + dictionariesCache.keySet().toString());
 		}
 	}
 	

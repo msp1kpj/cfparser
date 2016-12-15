@@ -139,7 +139,6 @@ public class CFMLParser {
 	
 	public CFMLParser() {
 		DictionaryManager.initDictionaries();
-		System.out.println(fDictPrefs.getDictionaryDir());
 		cfdic = DictionaryManager.getDictionaryByVersion(fDictPrefs.getCFDictionary());
 		if (cfdic == null) {
 			throw new IllegalArgumentException("The syntax dictionary could not be loaded!");

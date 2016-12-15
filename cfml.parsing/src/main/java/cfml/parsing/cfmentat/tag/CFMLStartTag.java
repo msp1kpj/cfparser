@@ -11,7 +11,7 @@ import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
 public class CFMLStartTag extends StartTagTypeGenericImplementation {
 	public class ParseItemMatch {
-		
+	
 	}
 	
 	public class AttributeItem {
@@ -84,7 +84,7 @@ public class CFMLStartTag extends StartTagTypeGenericImplementation {
 					isInApos = (!isInApos);
 				}
 				break;
-			
+				
 			default:
 				break;
 			}
@@ -119,8 +119,8 @@ public class CFMLStartTag extends StartTagTypeGenericImplementation {
 				attributes.add(attribute);
 				// System.out.println(attributeName + " = " +attributeValue);
 			} else {
-				System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with "
-						+ matcher.groupCount() + " matches");
+				System.out.println(
+						"CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
 				// for (int i = 0; i<=matcher.groupCount(); i++) {
 				// System.out.println("Match " + i + " : " + matcher.group(i));
 				// }
