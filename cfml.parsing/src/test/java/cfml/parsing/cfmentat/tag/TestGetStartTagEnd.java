@@ -242,20 +242,23 @@ public class TestGetStartTagEnd extends TestCase {
 		
 		assertEquals(rawSource.length(), cftag.getEnd());
 	}
-	
-	public void testAllStartTags_length_queryparamWithVariable() {
-		String rawSource = "<cfqueryparam value='#arguments.memberId#' cfsqltype='cf_sql_varchar'/>";
-		
-		StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
-		
-		assertEquals(rawSource.length(), cftag.getEnd());
-	}
-	
-	public void testAllStartTags_length_queryparamWithNoAttribute() {
-		String rawSource = "<cfqueryparam value='sd' />";
-		
-		StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
-		
-		assertEquals(rawSource.length(), cftag.getEnd());
-	}
+	/*
+	 * @Test
+	 * 
+	 * @Ignore public void testAllStartTags_length_queryparamWithVariable() { String rawSource =
+	 * "<cfqueryparam value='#arguments.memberId#' cfsqltype='cf_sql_varchar'/>";
+	 * 
+	 * StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
+	 * 
+	 * assertEquals(rawSource.length(), cftag.getEnd()); }
+	 * 
+	 * @Test
+	 * 
+	 * @Ignore public void testAllStartTags_length_queryparamWithNoAttribute() { String rawSource =
+	 * "<cfqueryparam value='sd' />";
+	 * 
+	 * StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
+	 * 
+	 * assertEquals(rawSource.length(), cftag.getEnd()); }
+	 */
 }
