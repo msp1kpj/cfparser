@@ -579,9 +579,9 @@ identifier | reservedWord;
 arrayMemberExpression
 	:LEFTBRACKET startExpression RIGHTBRACKET 
 	;
-  
+
 functionCall
-	:identifierOrReservedWord LEFTPAREN argumentList RIGHTPAREN
+	:identifier LEFTPAREN argumentList RIGHTPAREN
 	body=compoundStatement?
 	;
 	  
@@ -681,8 +681,6 @@ identifier
   | PACKAGE
   | REQUIRED
   | cfmlFunction
-  | //{!scriptMode}?//=> 
-  	cfscriptKeywords 
   | type	)
 	;
 

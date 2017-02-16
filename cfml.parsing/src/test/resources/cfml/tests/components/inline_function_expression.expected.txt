@@ -65,7 +65,7 @@ IDENTIFIER               <result>
                     (unaryExpression
                       (memberExpression
                         (functionCall
-                          (identifierOrReservedWord (identifier callback))
+                          (identifier callback)
                           (
                           (argumentList
                             (argument
@@ -75,7 +75,7 @@ IDENTIFIER               <result>
                                     (unaryExpression
                                       (memberExpression
                                         (functionCall
-                                          (identifierOrReservedWord (identifier trim))
+                                          (identifier trim)
                                           (
                                           (argumentList
                                             (argument
@@ -124,7 +124,7 @@ IDENTIFIER               <result>
                     (unaryExpression
                       (memberExpression
                         (functionCall
-                          (identifierOrReservedWord (identifier dotrim))
+                          (identifier dotrim)
                           (
                           (argumentList
                             (argument
