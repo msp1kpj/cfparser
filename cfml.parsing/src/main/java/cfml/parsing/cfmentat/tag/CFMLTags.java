@@ -34,13 +34,13 @@ public class CFMLTags {
 	
 	private static final TagType[] TAG_TYPES = { CFML_STANDARD, CFML_COMMENT, CFML_SET, CFML_IF, CFML_ELSE, CFML_ELSEIF,
 			CFML_FUNCTION, CFML_ARGUMENT, HTML_SCRIPT, CFML_SCRIPT, CFML_CONTENT, CFML_RETURN, CFML_MAIL, CFML_QUERY };
-	
+			
 	static boolean registered = false;
 	
 	public static void register() {
 		if (registered)
 			return;
-		
+			
 		DictionaryManager.initDictionaries();
 		SyntaxDictionary cfdic = DictionaryManager.getDictionary("CF_DICTIONARY");
 		Set<Tag> cfTags = cfdic.getAllTags();

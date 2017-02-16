@@ -56,6 +56,7 @@ HTML_TEXT
 mode TAG;
 
 CFSET	: [cC][fF][sS][eE][tT]' ' -> pushMode(CFEXPRESSION_MODE);
+CFQUERYPARAM	: [cC][fF][qQ][uU][eE][rR][yY][pP][aA][rR][aA][mM]' ' -> pushMode(CFEXPRESSION_MODE);
 
 TAG_CLOSE      
     : '>' -> popMode

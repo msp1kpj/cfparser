@@ -12,9 +12,12 @@ public class TestGetStartTagEnd extends TestCase {
 	private StartTag parseAndGetFirstTag(String rawSource, StartTagType startTag) {
 		// Create a source from the raw source
 		Source source = new Source(rawSource);
-		
+		// System.out.println(source.getAllElements());
 		// Retrieve all the start tags
 		List<StartTag> cftags = source.getAllStartTags(startTag);
+		System.out.println(cftags);
+		// System.out.println(source.toString());
+		// System.out.println(startTag.getStartDelimiter());
 		
 		// Return the first tag found
 		return cftags.get(0);
@@ -239,4 +242,23 @@ public class TestGetStartTagEnd extends TestCase {
 		
 		assertEquals(rawSource.length(), cftag.getEnd());
 	}
+	/*
+	 * @Test
+	 * 
+	 * @Ignore public void testAllStartTags_length_queryparamWithVariable() { String rawSource =
+	 * "<cfqueryparam value='#arguments.memberId#' cfsqltype='cf_sql_varchar'/>";
+	 * 
+	 * StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
+	 * 
+	 * assertEquals(rawSource.length(), cftag.getEnd()); }
+	 * 
+	 * @Test
+	 * 
+	 * @Ignore public void testAllStartTags_length_queryparamWithNoAttribute() { String rawSource =
+	 * "<cfqueryparam value='sd' />";
+	 * 
+	 * StartTag cftag = parseAndGetFirstTag(rawSource, StartTagTypeCfQueryParam.INSTANCE);
+	 * 
+	 * assertEquals(rawSource.length(), cftag.getEnd()); }
+	 */
 }
